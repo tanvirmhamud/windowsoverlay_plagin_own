@@ -10,6 +10,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.PixelFormat
 import android.os.*
+import android.provider.SyncStateContract
 import android.util.DisplayMetrics
 import android.view.*
 import android.widget.*
@@ -146,6 +147,9 @@ class overlayservice() : Service(), View.OnTouchListener, View.OnClickListener, 
         if (closelayout != null){
             windomanager.removeView(closelayout);
         }
+        stopForeground(true);
+
+        stopSelf();
     }
 
     override fun onBind(p0: Intent?): IBinder? {
@@ -192,7 +196,9 @@ class overlayservice() : Service(), View.OnTouchListener, View.OnClickListener, 
                         println("tanvir" + location[1]);
                         removelayout.setCardBackgroundColor(R.color.cardview_light_background);
                         handler.removeCallbacksAndMessages(null);
+
                         stopService(getintent)
+                        stopSelf();
                     }else{
                         removelayout.setCardBackgroundColor(R.color.black);
                     }

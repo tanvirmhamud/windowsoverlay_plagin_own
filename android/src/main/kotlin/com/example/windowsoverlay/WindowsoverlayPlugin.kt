@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import android.provider.SyncStateContract
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -48,6 +49,7 @@ class WindowsoverlayPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Bas
       activity.startService(service);
     } else if(call.method == "stopservice"){
       var service = Intent(context, overlayservice::class.java);
+
       activity.stopService(service);
       println(activity.packageName);
     }
