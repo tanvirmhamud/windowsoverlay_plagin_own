@@ -1,6 +1,7 @@
 package com.example.windowsoverlay
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -8,6 +9,7 @@ import android.provider.Settings
 import android.provider.SyncStateContract
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -43,19 +45,39 @@ class WindowsoverlayPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Bas
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
         candraw = Settings.canDrawOverlays(context);
       }
-      var service = Intent(context, overlayservice::class.java)
-      service.putExtra("matchid",matchid);
-      service.putExtra("token",token);
-      activity.startService(service);
+      if (isMyServiceRunning(overlayservice::class.java) == false){
+        var service = Intent(context, overlayservice::class.java)
+        service.putExtra("matchid",matchid);
+        service.putExtra("token",token);
+        activity.startService(service);
+      }else{
+        var service = Intent(context, overlayservice::class.java);
+        activity.stopService(service);
+        service.putExtra("matchid",matchid);
+        service.putExtra("token",token);
+        activity.startService(service);
+      }
     } else if(call.method == "stopservice"){
       var service = Intent(context, overlayservice::class.java);
 
       activity.stopService(service);
-      println(activity.packageName);
+
     }
     else {
       result.notImplemented()
     }
+  }
+
+
+
+  private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+    val manager: ActivityManager =activity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+      if (serviceClass.name == service.service.getClassName()) {
+        return true
+      }
+    }
+    return false
   }
 
 
