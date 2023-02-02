@@ -44,9 +44,12 @@ class overlayservice() : Service(), View.OnTouchListener, View.OnClickListener {
     lateinit var resultreceiver : ResultReceiver;
     private val client = OkHttpClient()
     lateinit var  workManager : WorkManager;
+    lateinit var  handler : Handler;
+    lateinit var roundable : Runnable;
 
     override fun onCreate() {
         super.onCreate()
+        handler = Handler();
         Toast.makeText(this, "service created", Toast.LENGTH_SHORT).show();
         windomanager = getSystemService(WINDOW_SERVICE) as WindowManager;
         overlaybutton = ImageButton(this);
@@ -83,6 +86,7 @@ class overlayservice() : Service(), View.OnTouchListener, View.OnClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        handler.removeCallbacksAndMessages(null);
         windomanager.removeView(overlayout);
     }
 
@@ -168,13 +172,13 @@ class overlayservice() : Service(), View.OnTouchListener, View.OnClickListener {
 
     fun streamdata(matchid: Int, token : String) {
         var t = 0
-        val handler = Handler()
+
         handler.postDelayed(object : Runnable {
             override fun run() {
                 t++
                 println("run"+t);
                 getrun(matchid,token);
-//                handler.postDelayed(this, 1000)
+                handler.postDelayed(this, 1000)
             }
         }, 1000)
     }

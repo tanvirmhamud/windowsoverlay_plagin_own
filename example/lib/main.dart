@@ -31,7 +31,8 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion = await _windowsoverlayPlugin.startservice(matchid: matchid,token: "live-soccer-tv-footballl-live-tv") ??
+      platformVersion = await _windowsoverlayPlugin.startservice(
+              matchid: matchid, token: "live-soccer-tv-footballl-live-tv") ??
           'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
@@ -54,14 +55,28 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: MaterialButton(
-            onPressed: () async {
-              initPlatformState(matchid: 980339);
-              // await Permission.systemAlertWindow.request();
-            },
-            child: Text("start Service"),
-          ),
+        body: Column(
+          children: [
+            MaterialButton(
+              onPressed: () async {
+                initPlatformState(matchid: 980339);
+                // await Permission.systemAlertWindow.request();
+              },
+              child: Text("start Service"),
+            ),
+            MaterialButton(
+              onPressed: () async {
+                Windowsoverlay().stopservice();
+              },
+              child: Text("Stop Service"),
+            ),
+            MaterialButton(
+              onPressed: () async {
+                await Permission.systemAlertWindow.request();
+              },
+              child: Text("Permission Check"),
+            ),
+          ],
         ),
       ),
     );
