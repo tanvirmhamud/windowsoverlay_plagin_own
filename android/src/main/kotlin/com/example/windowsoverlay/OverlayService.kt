@@ -176,7 +176,6 @@ class overlayservice() : Service(), View.OnTouchListener, View.OnClickListener {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 t++
-                println("run"+t);
                 getrun(matchid,token);
                 handler.postDelayed(this, 1000)
             }
