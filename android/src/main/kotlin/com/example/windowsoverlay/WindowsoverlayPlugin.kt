@@ -49,6 +49,7 @@ class WindowsoverlayPlugin: FlutterPlugin, MethodCallHandler, ActivityAware, Bas
     } else if(call.method == "stopservice"){
       var service = Intent(context, overlayservice::class.java);
       activity.stopService(service);
+      println(activity.packageName);
     }
     else {
       result.notImplemented()

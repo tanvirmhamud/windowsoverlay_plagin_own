@@ -59,7 +59,14 @@ class _MyAppState extends State<MyApp> {
           children: [
             MaterialButton(
               onPressed: () async {
-                initPlatformState(matchid: 980339);
+                initPlatformState(matchid: 710720);
+                // await Permission.systemAlertWindow.request();
+              },
+              child: Text("start Service"),
+            ),
+            MaterialButton(
+              onPressed: () async {
+                initPlatformState(matchid: 975902);
                 // await Permission.systemAlertWindow.request();
               },
               child: Text("start Service"),
