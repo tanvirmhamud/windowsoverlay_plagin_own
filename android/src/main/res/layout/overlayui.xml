@@ -19,7 +19,7 @@
             android:layout_width="220dp"
             android:orientation="vertical"
             android:paddingBottom="15dp"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/match_time"
@@ -109,7 +109,7 @@
             android:id="@+id/loading_indi"
             android:layout_width="match_parent"
             android:layout_gravity="center"
-            android:visibility="gone"
+            android:visibility="visible"
             android:gravity="center"
             android:layout_height="match_parent">
             <ProgressBar
