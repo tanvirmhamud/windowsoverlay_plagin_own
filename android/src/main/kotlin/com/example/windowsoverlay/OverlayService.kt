@@ -191,6 +191,7 @@ class overlayservice() : Service(), View.OnTouchListener, View.OnClickListener, 
                     if (params.y + 250 >= location[1]){
                         println("tanvir" + location[1]);
                         removelayout.setCardBackgroundColor(R.color.cardview_light_background);
+                        handler.removeCallbacksAndMessages(null);
                         stopService(getintent)
                     }else{
                         removelayout.setCardBackgroundColor(R.color.black);
